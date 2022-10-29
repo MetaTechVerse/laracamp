@@ -14,7 +14,7 @@ class Checkout extends Model
         'camp_id',
         'card_id',
         'expired',
-        'cvc',
+        'cvc',  
         'is_paid',
     ];
 }
