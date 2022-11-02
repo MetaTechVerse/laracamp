@@ -18,13 +18,13 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('login', function () {
-    return view('login');
+    return view('auth.login');
 })->name('login');
 
 Route::get('checkout', function () {
-    return view('checkout');
+    return view('checkout.create');
 })->name('checkout');
 
 Route::get('success-checkout', function () {
-return view('success_checkout');
+    return view('checkout.success');
 })->name('success-checkout');
