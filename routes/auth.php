@@ -18,10 +18,10 @@ Route::middleware('guest')->group(function () {
 
     Route::get('login/admin', function() {
         return view('auth.login');
-    })->name('login.admin');    
+    })->name('login.admin');
     
     // Route::get('login', [AuthenticatedSessionController::class, 'create'])
-    //             ->name('login');
+    //             ->name('login'); 
 
     Route::get('login', function() {
         return view('auth.user.login');

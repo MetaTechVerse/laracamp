@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password'); // not required when using OAuth
+            $table->string('password')->nullable(); // not required when using OAuth
             $table->string('avatar')->nullable();
             $table->string('occupation')->nullable();
             $table->string('is_admin')->default(false);

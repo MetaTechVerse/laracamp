@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function handleProviderCallback(){
         $callback = Socialite::driver('google')->stateless()->user();
-        $date = [
+        $data = [
             'name' => $callback->getName(),
             'email' => $callback->getEmail(),
             'avatar' => $callback->getAvatar(),
@@ -30,6 +30,6 @@ class UserController extends Controller
         $user = User::firstOrCreate(['email' => $data ['email']], $data);
         Auth::login($user,true);
 
-        return redirect(route('welcome'));
+        return redirect(route('dashboard'));
     }
 }
