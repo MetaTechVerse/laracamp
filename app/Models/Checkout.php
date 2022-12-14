@@ -13,7 +13,7 @@ class Checkout extends Model
     protected $fillable = [
         'user_id',
         'camp_id',
-        'card_id',
+        'card_number',
         'expired',
         'cvc',  
         'is_paid',
@@ -26,5 +26,9 @@ class Checkout extends Model
 
     public function camp(){
         return $this->belongsTo(Camp::class, 'camp_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(Camp::class, 'user_id');
     }
 }

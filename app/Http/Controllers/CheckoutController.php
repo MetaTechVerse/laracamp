@@ -5,20 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\Controller as BaseController;
+use App\Http\Requests\User\Checkout\Store;
 use App\Models\Camp;
 use App\Models\User;
+use App\Models\Checkout;
 use Auth;
+use Mail;
+use App\Mail\Checkout\AfterCheckout;
 
 class CheckoutController extends Controller
 {
-    public function create(Camp $camp)
+    public function create(Request $request,Camp $camp)
     {
+        if ($camp->isRegistered) {
+            $request->session()->flash('error', "You already registered on {$camp->title} camp.");
+            return redirect(route('dashboard'));    
+        }
+
         return view('checkout.create', [
             "camp"=>$camp
         ]);
     }
 
-    public function store(Request $request, Camp $camp)
+    public function store(Store $request, Camp $camp)
     {
         try{
             DB::beginTransaction();
@@ -36,6 +45,8 @@ class CheckoutController extends Controller
 
             // create checkout
             $checkout = Checkout::create($data);
+
+            Mail::to(Auth::user()->email)->send(new AfterCheckout($checkout));
 
             DB::commit();
         }

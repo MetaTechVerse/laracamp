@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Mail\Checkout;
+namespace App\Mail\User;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AfterCheckout extends Mailable
+class AfterRegister extends Mailable
 {
     use Queueable, SerializesModels;
-    private $checkout;
+    private $user;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($checkout)
+    public function __construct($user)
     {
-        $this->checkout = $checkout;
+        $this->user = $user;
     }
 
     /**
@@ -28,8 +28,8 @@ class AfterCheckout extends Mailable
      */
     public function build()
     {
-        return $this->subject("Register Camp: {$this->checkout->camp->title}")->markdown('emails.checkout.afterCheckout', [
-            'checkout' => $this->checkout
+        return $this->subject('Registration on Laracamp')->markdown('emails.user.afterRegister',[
+            'user' => $this->user
         ]);
     }
 }
