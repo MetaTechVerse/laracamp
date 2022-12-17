@@ -25,7 +25,11 @@
                 <div class="d-flex user-logged nav-item dropdown no-arrow">
                     <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuLnk">
                         Halo, {{Auth::user()->name}}!
-                        <img src="{{ Auth::user()->avatar }}" class="user-photo" alt="">
+                        @if (Auth::user()->avatar)
+                            <img src="{{ Auth::user()->avatar }}" class="user-photo" alt="">
+                        @else
+                            <img src="https://ui-avatars.com/api?name=Admin" class="user-photo" alt="admin's avatar">
+                        @endif
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right:0; left:auto">
                         <li>
@@ -33,7 +37,7 @@
                         </li>
                         <li>
                             <a href="{{route('logout')}}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Sign Out</a>
-                            <form method="post" action="{{route('logout')}}" style="display:none" id="logout-form">
+                            <form method="get" action="{{route('logout')}}" style="display:none" id="logout-form">
                                 <input type="hidden" name="token" value="{{csrf_token()}}">
                             </form>
                         </li>
