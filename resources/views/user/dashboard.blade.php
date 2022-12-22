@@ -17,37 +17,46 @@
             @include('components.alert')
             <table class="table">
                 <tbody>
-                    @foreach($checkouts as $checkout)
-                        <tr class="align-middle">
-                            <td width="18%">
-                                <img src="{{asset('images/item_bootcamp.png')}}" height="120" alt="">
-                            </td>
-                            <td>
-                                <p class="mb-2">
-                                    <strong>{{$checkout->camp->title}}</strong>
-                                </p>
-                                <p>
-                                {{$checkout->created_at->format('M d, Y')}}
-                                </p>
-                            </td>
-                            <td>
-                                <strong>$ {{$checkout->camp->price}}</strong>
-                            </td>
-                            <td>
-                                @if($checkout->is_paid)
-                                    <strong><span class="text-green">Payment Success</span></strong>
-                                @else
-                                    <strong>Waiting for Payment</strong>
-                                @endif
-                            </td>
-                            <td>
-                                <a href="https://wa.me/085780276907?text=Hai, sy ingin bertanya tentang kelas {{$checkout->camp->title}}" 
-                                class="btn btn-primary">
-                                    Contact Support
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
+                    @forelse ($checkouts as $checkout)
+                    <tr class="align-middle">
+                        <td width="18%">
+                            <img src="{{asset('images/item_bootcamp.png')}}" height="120" alt="">
+                        </td>
+                        <td>
+                            <p class="mb-2">
+                                <strong>{{$checkout->camp->title}}</strong>
+                            </p>
+                            <p>
+                            {{$checkout->created_at->format('M d, Y')}}
+                            </p>
+                        </td>
+                        <td>
+                            <strong>$ {{$checkout->camp->price}}</strong>
+                        </td>
+                        <td>
+                            <strong class="{{$checkout->payment_status == 'paid'?'text-success':'text-secondary'}}">
+                                {{$checkout->payment_status}}
+                            </strong>
+                        </td>
+                        <td>
+                            @if ($checkout->payment_status == 'waiting')
+                                <a href="{{$checkout->midtrans_url}}" target="_blank" class="btn btn-primary">Pay Here</a>
+                            @endif
+                        </td>
+                        <td>
+                            <a href="https://wa.me/085780276907?text=Hai, sy ingin bertanya tentang kelas {{$checkout->camp->title}}" 
+                            class="btn btn-primary">
+                                Contact Support
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr class="align-middle">
+                        <td colspan="5">
+                            <h3>No Data</h3>
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
